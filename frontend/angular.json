@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "habit_app_frontend": {
+    "taskmanager_frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -56,10 +56,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "habit_app_frontend:build:production"
+              "buildTarget": "taskmanager_frontend:build:production"
             },
             "development": {
-              "buildTarget": "habit_app_frontend:build:development"
+              "buildTarget": "taskmanager_frontend:build:development"
             }
           },
           "defaultConfiguration": "development"
