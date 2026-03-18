@@ -1,0 +1,18 @@
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type='checkbox'] {
+  margin-top: 5px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}

@@ -1,0 +1,9 @@
+<div appAppHighlightCompletedTodo [isCompleted]="todoItem().completed" class="card">
+  <label for="todo--{{ todoItem().id }}">{{ todoItem().title | uppercase }}</label>
+  <input
+    id="todo--{{ todoItem().id }}"
+    type="checkbox"
+    [checked]="todoItem().completed"
+    (change)="this.todoClicked()"
+  />
+</div>

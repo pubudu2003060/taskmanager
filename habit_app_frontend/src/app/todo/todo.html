@@ -1,0 +1,17 @@
+@if (!isTodoLoaded()) {
+  <p>Loading...</p>
+}
+
+<form action="">
+  <label for="">Filter Todos</label>
+  <input
+    type="text"
+    name="searchterm"
+    [(ngModel)]="searchTerm"
+    placeholder="Search for a todo item"
+  />
+</form>
+
+@for (item of todos() | folterTodos: searchTerm(); track item.id) {
+  <app-todo-card (todoTogled)="updateTodoItem($event)" [todoItem]="item"></app-todo-card>
+}
