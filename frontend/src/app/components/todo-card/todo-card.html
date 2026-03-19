@@ -1,5 +1,7 @@
 <div appAppHighlightCompletedTodo [isCompleted]="todoItem().completed" class="card">
-  <label for="todo--{{ todoItem().id }}">{{ todoItem().title | uppercase }}</label>
+  <a [routerLink]="['/taskdetails', todoItem().id]">
+    {{ todoItem().title | uppercase }}
+  </a>
   <input
     id="todo--{{ todoItem().id }}"
     type="checkbox"

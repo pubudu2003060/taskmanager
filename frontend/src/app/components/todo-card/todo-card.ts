@@ -3,10 +3,11 @@ import { TodoItem } from '../../models/todo.model';
 import { AppHighlightCompletedTodo } from '../../directives/app-highlight-completed-todo';
 import { todo } from 'node:test';
 import { UpperCasePipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-todo-card',
-  imports: [AppHighlightCompletedTodo, UpperCasePipe],
+  imports: [AppHighlightCompletedTodo, UpperCasePipe, RouterLink],
   templateUrl: './todo-card.html',
   styleUrl: './todo-card.scss',
 })

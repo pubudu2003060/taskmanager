@@ -9,5 +9,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.scss',
 })
 export class Header {
-  logoName = signal('pubudu website');
+  appName = signal('Task Manager');
 }
