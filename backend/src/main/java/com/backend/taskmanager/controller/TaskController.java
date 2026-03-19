@@ -1,8 +1,7 @@
 package com.backend.taskmanager.controller;
 
 import com.backend.taskmanager.dto.TaskDTO;
-import com.backend.taskmanager.service.TaskService;
-import org.springframework.stereotype.Controller;
+import com.backend.taskmanager.service.TaskServiceImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +14,9 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class TaskController {
 
-    private final TaskService taskService;
+    private final TaskServiceImpl taskService;
 
-    public TaskController(TaskService taskService) {
+    public TaskController(TaskServiceImpl taskService) {
         this.taskService = taskService;
     }
 

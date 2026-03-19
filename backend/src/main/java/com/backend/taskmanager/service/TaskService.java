@@ -1,24 +1,14 @@
 package com.backend.taskmanager.service;
 
 import com.backend.taskmanager.dto.TaskDTO;
-import com.backend.taskmanager.repository.TaskRepository;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
-@Service
-public class TaskService {
-
-    private final TaskRepository taskRepository;
-
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
-
-    public List<TaskDTO> getAllTasks() {
-        return taskRepository.findAll()
-                .stream()
-                .map((task)-> new TaskDTO(task.getId(),task.getTitle(),task.getDescription(),task.getStatus(),task.getCreatedAt()))
-                .toList();
-    }
+public interface TaskService {
+    List<TaskDTO> getAllTasks();
+    TaskDTO getTaskById(UUID id);
+    TaskDTO createTask(TaskDTO task);
+    TaskDTO updateTask(UUID id, TaskDTO updatedTask);
+    void deleteTask(UUID id);
 }
