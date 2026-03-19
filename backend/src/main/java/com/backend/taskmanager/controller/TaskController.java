@@ -2,6 +2,7 @@ package com.backend.taskmanager.controller;
 
 import com.backend.taskmanager.dto.TaskDTO;
 import com.backend.taskmanager.service.TaskServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public TaskDTO createTask(@RequestBody TaskDTO task) {
+    public TaskDTO createTask(@Valid @RequestBody TaskDTO task) {
         return taskService.createTask(task);
     }
 

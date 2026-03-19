@@ -1,10 +1,6 @@
 package com.backend.taskmanager.dto;
 
-import com.backend.taskmanager.model.Task;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,11 +15,12 @@ public class TaskDTO {
 
     private UUID id;
 
+    @NotBlank(message = "Title is required")
     private String title;
 
     private String description;
 
-    private String status;
+    private Status status;
 
     private LocalDateTime createdAt;
 
