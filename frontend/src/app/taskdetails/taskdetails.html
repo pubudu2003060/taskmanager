@@ -1,0 +1,40 @@
+<main class="task-details-page">
+  <section class="task-details-card">
+    <button class="back-button" routerLink="/">Back to Tasks</button>
+
+    @if (isLoading()) {
+      <p class="state-text">Loading task details...</p>
+    } @else if (errorMessage) {
+      <p class="state-text error-text">{{ errorMessage }}</p>
+    } @else if (task()) {
+      <div class="card-header">
+        <h1>{{ task()?.title }}</h1>
+        <span class="status-badge">{{ getStatusLabel() }}</span>
+      </div>
+
+      <div class="detail-grid">
+        <div class="meta-block">
+          <p class="meta-label">TASK ID</p>
+          <p class="meta-value">#{{ task()?.id }}</p>
+        </div>
+
+        <div class="meta-block">
+          <p class="meta-label">USER ID</p>
+          <p class="meta-value">#{{ task()?.userId }}</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="description-block">
+        <p class="meta-label">TITLE</p>
+        <p class="description-text">{{ task()?.title }}</p>
+      </div>
+
+      <div>
+        <button [routerLink]="['/edittask', task()?.id]">Edit Task</button>
+        <button>Delete Task</button>
+      </div>
+    }
+  </section>
+</main>

@@ -1,0 +1,131 @@
+.task-details-page {
+  min-height: 100vh;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top left, rgba(218, 237, 255, 0.7), transparent 28%),
+    linear-gradient(180deg, #f7fbff 0%, #eef4f9 100%);
+  color: #16324f;
+}
+
+.task-details-card {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  border: 1px solid #d8e2ee;
+  border-radius: 1.25rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 22px 45px rgba(45, 79, 120, 0.12);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.back-button {
+  padding: 0.75rem 1rem;
+  border: 1px solid #bfd0e3;
+  border-radius: 999px;
+  background: #f6fbff;
+  color: #27507a;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-weight: 700;
+}
+
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+h1 {
+  margin: 0 0 1.5rem;
+  font-size: 2.1rem;
+  line-height: 1.2;
+  color: #17324d;
+}
+
+.meta-block,
+.description-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.meta-label {
+  margin: 0;
+  color: #6b8199;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.meta-value {
+  margin: 0;
+  color: #244463;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.divider {
+  height: 1px;
+  margin: 1.75rem 0;
+  background: #dbe5f0;
+}
+
+.description-text {
+  margin: 0;
+  color: #244463;
+  font-size: 1.5rem;
+  line-height: 1.65;
+  font-weight: 600;
+}
+
+.state-text {
+  margin: 1.5rem 0 0;
+  color: #36506c;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.error-text {
+  color: #b9382d;
+}
+
+@media (max-width: 640px) {
+  .task-details-page {
+    padding: 1rem;
+  }
+
+  .task-details-card {
+    padding: 1.25rem;
+  }
+
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .status-badge {
+    align-self: flex-start;
+  }
+}

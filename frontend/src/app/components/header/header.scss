@@ -12,19 +12,17 @@ header {
     color: #333;
   }
 
-  nav {
-    ul {
-      list-style: none;
-      display: flex;
-      gap: 1rem;
+  button {
+    background-color: #e10a0a;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
 
-      li {
-        a {
-          text-decoration: none;
-          color: #333;
-          font-weight: 500;
-        }
-      }
+    &:hover {
+      background-color: #0056b3;
     }
   }
 }

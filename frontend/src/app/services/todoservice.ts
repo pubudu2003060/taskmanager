@@ -7,7 +7,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class Todoservice {
   http = inject(HttpClient);
+
   getTodosFromAPI() {
     return this.http.get<TodoItem[]>('https://jsonplaceholder.typicode.com/todos');
+  }
+
+  getTodoById(id: number) {
+    return this.http.get<TodoItem>(`https://jsonplaceholder.typicode.com/todos/${id}`);
   }
 }

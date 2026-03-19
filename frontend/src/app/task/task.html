@@ -1,0 +1,36 @@
+<main>
+  <div>
+    <div>
+      <div>
+        <h2>All Task</h2>
+        <p>{{ tasks().length }} total tasks</p>
+      </div>
+      <button routerLink="/newtask">Newtask</button>
+    </div>
+    <div>
+      <form action="">
+        <input
+          type="text"
+          name="searchterm"
+          [(ngModel)]="searchTerm"
+          placeholder="Search for a todo item"
+        />
+      </form>
+    </div>
+    <div>
+      <button>All</button>
+      <button>Todo</button>
+      <button>Inprogress</button>
+      <button>Completed</button>
+    </div>
+  </div>
+  <div>
+    @if (!isTaskLoaded()) {
+      <p>Loading...</p>
+    }
+
+    @for (item of tasks() | folterTodos: searchTerm(); track item.id) {
+      <app-todo-card (todoTogled)="updateTodoItem($event)" [todoItem]="item"></app-todo-card>
+    }
+  </div>
+</main>
