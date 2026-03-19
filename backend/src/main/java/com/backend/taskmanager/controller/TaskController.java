@@ -2,12 +2,10 @@ package com.backend.taskmanager.controller;
 
 import com.backend.taskmanager.dto.TaskDTO;
 import com.backend.taskmanager.service.TaskServiceImpl;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
@@ -23,5 +21,25 @@ public class TaskController {
     @GetMapping
     public List<TaskDTO> getAllTasks() {
         return taskService.getAllTasks();
+    }
+
+    @GetMapping("/{id}")
+    public TaskDTO getTask(@PathVariable UUID id) {
+        return taskService.getTaskById(id);
+    }
+
+    @PostMapping
+    public TaskDTO createTask(@RequestBody TaskDTO task) {
+        return taskService.createTask(task);
+    }
+
+    @PutMapping("/{id}")
+    public TaskDTO updateTask(@PathVariable UUID id, @RequestBody TaskDTO task) {
+        return taskService.updateTask(id, task);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable UUID id) {
+        taskService.deleteTask(id);
     }
 }
