@@ -9,5 +9,7 @@ CREATE TABLE IF NOT EXISTS task (
     title VARCHAR(255) NOT NULL,
     description TEXT,
     status VARCHAR(50) NOT NULL DEFAULT 'TO_DO',
-    created_at TIMESTAMP
+    user_id CHAR(36),
+    created_at TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );

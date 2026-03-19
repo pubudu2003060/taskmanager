@@ -1,28 +1,23 @@
 package com.backend.taskmanager.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskDTO {
+public class UserDTO {
 
     private UUID id;
 
-    @NotBlank(message = "Title is required")
-    private String title;
+    @NotBlank(message = "Username is not Empty")
+    private String username;
 
-    private String description;
-
-    private Status status;
-
-    private LocalDateTime createdAt;
-
-    private UUID userId;
+    @NotBlank(message = "Password is not Empty")
+    private String password;
 }
