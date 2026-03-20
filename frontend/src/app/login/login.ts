@@ -3,7 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JWTResponse, LoginRequest, RegisterRequest, User } from '../models/user.mode';
 import { LoginService } from '../services/login-service';
 import { catchError } from 'rxjs/internal/operators/catchError';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +12,8 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.scss',
 })
 export class Login {
+  router = inject(Router);
+
   pageType = signal('login');
 
   loginService = inject(LoginService);
@@ -37,6 +39,7 @@ export class Login {
         )
         .subscribe((jwt) => {
           localStorage.setItem('jwt', jwt.token);
+          this.router.navigate(['/']);
         });
     } else if (this.pageType() === 'register') {
       const user: RegisterRequest = {

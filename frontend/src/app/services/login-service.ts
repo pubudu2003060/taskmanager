@@ -8,12 +8,14 @@ import {
   User,
 } from '../models/user.mode';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   http = inject(HttpClient);
+  router = inject(Router);
 
   login(user: LoginRequest) {
     if (!user.username) {
@@ -29,7 +31,8 @@ export class LoginService {
   }
 
   logout() {
-    return this.http.post('/api/logout', {});
+    localStorage.removeItem('jwt');
+    this.router.navigate(['/login']);
   }
 
   register(user: RegisterRequest) {
