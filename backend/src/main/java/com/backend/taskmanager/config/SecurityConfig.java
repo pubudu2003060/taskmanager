@@ -25,8 +25,8 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
 
-    @Value("")
-    private String FrontendURL;
+    @Value("${FRONTEND_URL:http://localhost:4200}")
+    private String frontendURL;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,7 +45,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(FrontendURL));
+        configuration.setAllowedOrigins(Arrays.asList(frontendURL));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
