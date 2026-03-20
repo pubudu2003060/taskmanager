@@ -3,10 +3,11 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TodoItem } from '../models/todo.model';
 import { TaskService } from '../services/task-service';
 import { catchError } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-taskdetails',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
   templateUrl: './taskdetails.html',
   styleUrl: './taskdetails.scss',
 })
@@ -14,7 +15,6 @@ export class Taskdetails implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly todoService = inject(TaskService);
-  outTask = output<TodoItem>();
 
   task = signal<TodoItem>({} as TodoItem);
   isLoading = signal(true);
