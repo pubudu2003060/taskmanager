@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import {
   JWTResponse,
   LoginRequest,
@@ -16,6 +16,7 @@ import { Router } from '@angular/router';
 export class LoginService {
   http = inject(HttpClient);
   router = inject(Router);
+  isLoggedIn = signal(!!localStorage.getItem('jwt'));
 
   login(user: LoginRequest) {
     if (!user.username) {
@@ -32,7 +33,15 @@ export class LoginService {
 
   logout() {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('isLogin');
+    this.isLoggedIn.set(false);
     this.router.navigate(['/login']);
+  }
+
+  setLoggedIn(token: string) {
+    localStorage.setItem('jwt', token);
+    localStorage.setItem('isLogin', 'true');
+    this.isLoggedIn.set(true);
   }
 
   register(user: RegisterRequest) {

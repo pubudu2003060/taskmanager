@@ -38,7 +38,7 @@ export class Login {
           }),
         )
         .subscribe((jwt) => {
-          localStorage.setItem('jwt', jwt.token);
+          this.loginService.setLoggedIn(jwt.token);
           this.router.navigate(['/']);
         });
     } else if (this.pageType() === 'register') {

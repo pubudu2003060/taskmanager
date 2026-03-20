@@ -1,4 +1,6 @@
 <header>
   <h1>{{ appName() }}</h1>
-  <button (click)="logout()">Logout</button>
+  @if (loginService.isLoggedIn()) {
+    <button (click)="logout()">Logout</button>
+  }
 </header>
