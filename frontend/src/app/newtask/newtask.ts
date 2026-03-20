@@ -98,7 +98,7 @@ export class Newtask implements OnInit {
     this.todoService.getTodoById(id).subscribe((task) => {
       this.taskForm.patchValue({
         title: task.title,
-        description: task.title,
+        description: task.description,
         status: task.status,
       });
     });
