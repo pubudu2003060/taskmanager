@@ -1,7 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { TodoItem } from '../../models/todo.model';
 import { AppHighlightCompletedTodo } from '../../directives/app-highlight-completed-todo';
-import { todo } from 'node:test';
 import { UpperCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DescriptionSlicePipePipe } from '../../pipes/description-slice-pipe-pipe';
@@ -14,4 +13,9 @@ import { DescriptionSlicePipePipe } from '../../pipes/description-slice-pipe-pip
 })
 export class TodoCard {
   todoItem = input.required<TodoItem>();
+  taskDeleted = output<string>();
+
+  onDeleteClick() {
+    this.taskDeleted.emit(this.todoItem().id.toString());
+  }
 }
