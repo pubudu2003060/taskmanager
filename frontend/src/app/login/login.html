@@ -1,1 +1,30 @@
-<p>login works!</p>
+<div>
+  @if (pageType() === 'login') {
+    <h2>Login</h2>
+  }
+  @if (pageType() === 'register') {
+    <h2>Register</h2>
+  }
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Username:</label>
+      <input type="text" id="username" formControlName="username" required />
+    </div>
+    <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" formControlName="password" required />
+    </div>
+    @if (pageType() === 'login') {
+      <button type="submit">Login</button>
+    }
+    @if (pageType() === 'register') {
+      <button type="submit">Register</button>
+    }
+  </form>
+  @if (pageType() === 'login') {
+    <button (click)="changePageType('register')">I don't have an account</button>
+  }
+  @if (pageType() === 'register') {
+    <button (click)="changePageType('login')">Already have an account</button>
+  }
+</div>
