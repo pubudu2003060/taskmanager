@@ -33,7 +33,25 @@ export class Newtask implements OnInit {
     if (this.taskForm.invalid) return;
 
     if (this.isEditMode()) {
-      console.log('update task', this.taskId, this.taskForm.getRawValue());
+      const task: CreateTodoItem = {
+        title: this.taskForm.value.title || '',
+        description: this.taskForm.value.description || '',
+        status: this.taskForm.value.status || 'TO_DO',
+      };
+
+      this.todoService
+        .updateTask(this.taskId ? this.taskId : '', task)
+        .pipe(
+          catchError((error) => {
+            console.error('Error updating task:', error);
+            throw error;
+          }),
+        )
+        .subscribe((task) => {
+          console.log('Updated task:', task);
+          this.submitAttempted.set(false);
+          this.router.navigate([`/taskdetails/${this.taskId}`]);
+        });
     } else {
       const task: CreateTodoItem = {
         title: this.taskForm.value.title || '',

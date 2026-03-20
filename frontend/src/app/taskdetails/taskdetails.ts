@@ -15,7 +15,7 @@ export class Taskdetails implements OnInit {
   private readonly todoService = inject(TaskService);
   outTask = output<TodoItem>();
 
-  task = signal<TodoItem | null>(null);
+  task = signal<TodoItem>({} as TodoItem);
   isLoading = signal(true);
   errorMessage = '';
 
@@ -42,6 +42,6 @@ export class Taskdetails implements OnInit {
   }
 
   getStatusLabel(): string {
-    return this.task()?.status === 'DONE' ? 'Completed' : 'Pending';
+    return this.task().status;
   }
 }

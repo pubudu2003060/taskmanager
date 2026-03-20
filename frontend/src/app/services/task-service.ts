@@ -42,4 +42,16 @@ export class TaskService {
       this.getAuthHeaders(),
     );
   }
+
+  updateTask(id: string, task: CreateTodoItem) {
+    return this.http.put<CreateTodoItem>(
+      `${environment.apiUrl}/api/v1/tasks/${id}`,
+      {
+        title: task.title,
+        description: task.description,
+        status: task.status,
+      },
+      this.getAuthHeaders(),
+    );
+  }
 }

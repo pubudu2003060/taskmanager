@@ -3,7 +3,7 @@ export type TodoItem = {
   id: number;
   title: string;
   description?: string;
-  status?: 'TO_DO' | 'IN_PROGRESS' | 'DONE';
+  status: 'TO_DO' | 'IN_PROGRESS' | 'DONE';
 };
 
 export type CreateTodoItem = {

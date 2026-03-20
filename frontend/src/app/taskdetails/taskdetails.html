@@ -8,28 +8,12 @@
       <p class="state-text error-text">{{ errorMessage }}</p>
     } @else if (task()) {
       <div class="card-header">
-        <h1>{{ task()?.title }}</h1>
+        <h1>{{ task().title }}</h1>
+        <p>{{ task().description }}</p>
         <span class="status-badge">{{ getStatusLabel() }}</span>
       </div>
 
-      <div class="detail-grid">
-        <div class="meta-block">
-          <p class="meta-label">TASK ID</p>
-          <p class="meta-value">#{{ task()?.id }}</p>
-        </div>
-
-        <div class="meta-block">
-          <p class="meta-label">USER ID</p>
-          <p class="meta-value">#{{ task()?.userId }}</p>
-        </div>
-      </div>
-
       <div class="divider"></div>
-
-      <div class="description-block">
-        <p class="meta-label">TITLE</p>
-        <p class="description-text">{{ task()?.title }}</p>
-      </div>
 
       <div>
         <button [routerLink]="['/edittask', task()?.id]">Edit Task</button>
