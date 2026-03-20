@@ -185,3 +185,18 @@ FRONTEND_URL=http://localhost:4200
 ```
 
 ## Screenshots
+
+<img width="1283" height="724" alt="image" src="https://github.com/user-attachments/assets/6501b756-e618-4fdd-a758-6834b847d398" />
+
+<img width="1914" height="906" alt="image" src="https://github.com/user-attachments/assets/600e94a2-29fd-46a9-b516-341f5c950f3d" />
+
+<img width="1911" height="909" alt="image" src="https://github.com/user-attachments/assets/98ce724e-8880-48f9-8e42-16be88301e58" />
+
+<img width="1917" height="903" alt="image" src="https://github.com/user-attachments/assets/c50012a7-90a0-465f-9332-7317b4a8fe2b" />
+
+<img width="1911" height="904" alt="image" src="https://github.com/user-attachments/assets/343dbafb-1f9c-48b5-b62e-699f5a48c1fd" />
+
+
+
+
+
