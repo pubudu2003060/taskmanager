@@ -3,20 +3,21 @@ import { TodoItem } from '../models/todo.model';
 import { TodoCard } from '../components/todo-card/todo-card';
 import { catchError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { FolterTodosPipe } from '../pipes/folter-todos-pipe';
+import { FilterTodosPipe } from '../pipes/filter-todos-pipe';
 import { RouterLink } from '@angular/router';
 import { TaskService } from '../services/task-service';
 
 @Component({
   selector: 'app-task',
-  imports: [TodoCard, FormsModule, FolterTodosPipe, RouterLink],
+  imports: [TodoCard, FormsModule, FilterTodosPipe, RouterLink],
   templateUrl: './task.html',
   styleUrl: './task.scss',
 })
 export class Task implements OnInit {
   taskService = inject(TaskService);
   tasks = signal<TodoItem[]>([]);
-  searchTerm = signal('');
+  searchTerm = '';
+  selectedStatusFilter: 'ALL' | 'TO_DO' | 'IN_PROGRESS' | 'DONE' = 'ALL';
   isTaskLoaded = signal(false);
 
   ngOnInit(): void {
@@ -44,10 +45,15 @@ export class Task implements OnInit {
           return {
             ...task,
             completed: !task.completed,
+            status: task.completed ? 'TO_DO' : 'DONE',
           };
         }
         return task;
       });
     });
+  }
+
+  setStatusFilter(filter: 'ALL' | 'TO_DO' | 'IN_PROGRESS' | 'DONE') {
+    this.selectedStatusFilter = filter;
   }
 }

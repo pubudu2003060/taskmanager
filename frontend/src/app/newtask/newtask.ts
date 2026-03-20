@@ -16,7 +16,7 @@ export class Newtask implements OnInit {
   isEditMode = signal(false);
   taskId: string | null = null;
 
-  readonly statusOptions = ['TO_DO', 'IN_PROGRESS', 'COMPLETED'];
+  readonly statusOptions = ['TO_DO', 'IN_PROGRESS', 'DONE'];
   readonly submitAttempted = signal(false);
 
   readonly taskForm = this.formBuilder.nonNullable.group({
@@ -59,8 +59,8 @@ export class Newtask implements OnInit {
     this.todoService.getTodoById(id).subscribe((task) => {
       this.taskForm.patchValue({
         title: task.title,
-        description: task.title, // jsonplaceholder has no description
-        status: task.completed ? 'COMPLETED' : 'TO_DO',
+        description: task.title,
+        status: task.completed ? 'DONE' : 'TO_DO',
       });
     });
   }

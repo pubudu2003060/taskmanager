@@ -18,10 +18,10 @@
       </form>
     </div>
     <div>
-      <button>All</button>
-      <button>Todo</button>
-      <button>Inprogress</button>
-      <button>Completed</button>
+      <button type="button" (click)="setStatusFilter('ALL')">All</button>
+      <button type="button" (click)="setStatusFilter('TO_DO')">Todo</button>
+      <button type="button" (click)="setStatusFilter('IN_PROGRESS')">Inprogress</button>
+      <button type="button" (click)="setStatusFilter('DONE')">Completed</button>
     </div>
   </div>
   <div>
@@ -29,7 +29,7 @@
       <p>Loading...</p>
     }
 
-    @for (item of tasks() | folterTodos: searchTerm(); track item.id) {
+    @for (item of tasks() | filterTodos: searchTerm : selectedStatusFilter; track item.id) {
       <app-todo-card (todoTogled)="updateTodoItem($event)" [todoItem]="item"></app-todo-card>
     }
   </div>
