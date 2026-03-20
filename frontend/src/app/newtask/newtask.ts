@@ -1,7 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { catchError } from 'rxjs';
 import { TaskService } from '../services/task-service';
+import { CreateTodoItem, TodoItem } from '../models/todo.model';
 
 @Component({
   selector: 'app-newtask',
@@ -11,7 +13,7 @@ import { TaskService } from '../services/task-service';
 })
 export class Newtask implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly formBuilder = inject(FormBuilder);
+  private readonly router = inject(Router);
   private readonly todoService = inject(TaskService);
   isEditMode = signal(false);
   taskId: string | null = null;
@@ -19,19 +21,39 @@ export class Newtask implements OnInit {
   readonly statusOptions = ['TO_DO', 'IN_PROGRESS', 'DONE'];
   readonly submitAttempted = signal(false);
 
-  readonly taskForm = this.formBuilder.nonNullable.group({
-    title: ['', [Validators.required, Validators.maxLength(100)]],
-    description: ['', [Validators.maxLength(500)]],
-    status: ['TO_DO', Validators.required],
+  taskForm = new FormGroup({
+    title: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    description: new FormControl('', [Validators.maxLength(500)]),
+    status: new FormControl<'TO_DO' | 'IN_PROGRESS' | 'DONE'>('TO_DO', Validators.required),
   });
 
   onSubmit(): void {
+    this.submitAttempted.set(true);
+
     if (this.taskForm.invalid) return;
 
     if (this.isEditMode()) {
       console.log('update task', this.taskId, this.taskForm.getRawValue());
     } else {
-      console.log('create task', this.taskForm.getRawValue());
+      const task: CreateTodoItem = {
+        title: this.taskForm.value.title || '',
+        description: this.taskForm.value.description || '',
+        status: this.taskForm.value.status || 'TO_DO',
+      };
+
+      this.todoService
+        .createTask(task)
+        .pipe(
+          catchError((error) => {
+            console.error('Error creating task:', error);
+            throw error;
+          }),
+        )
+        .subscribe((task) => {
+          console.log('Created task:', task);
+          this.submitAttempted.set(false);
+          this.router.navigate(['/']);
+        });
     }
   }
 
@@ -45,7 +67,6 @@ export class Newtask implements OnInit {
   }
 
   ngOnInit(): void {
-    //if path is edittask then we are in edit mode
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode.set(true);
@@ -60,7 +81,7 @@ export class Newtask implements OnInit {
       this.taskForm.patchValue({
         title: task.title,
         description: task.title,
-        status: task.completed ? 'DONE' : 'TO_DO',
+        status: task.status,
       });
     });
   }

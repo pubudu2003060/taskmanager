@@ -37,22 +37,6 @@ export class Task implements OnInit {
       });
   }
 
-  updateTodoItem(taskItem: TodoItem) {
-    console.log('Todo item toggled:', taskItem);
-    this.tasks.update((tasks) => {
-      return tasks.map((task) => {
-        if (task.id === taskItem.id) {
-          return {
-            ...task,
-            completed: !task.completed,
-            status: task.completed ? 'TO_DO' : 'DONE',
-          };
-        }
-        return task;
-      });
-    });
-  }
-
   setStatusFilter(filter: 'ALL' | 'TO_DO' | 'IN_PROGRESS' | 'DONE') {
     this.selectedStatusFilter = filter;
   }

@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { TodoItem } from '../models/todo.model';
+import { CreateTodoItem, TodoItem } from '../models/todo.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { UUID } from 'crypto';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +27,18 @@ export class TaskService {
     console.log('Fetching task details for ID:', id);
     return this.http.get<TodoItem>(
       `${environment.apiUrl}/api/v1/tasks/${id}`,
+      this.getAuthHeaders(),
+    );
+  }
+
+  createTask(task: CreateTodoItem) {
+    return this.http.post<CreateTodoItem>(
+      `${environment.apiUrl}/api/v1/tasks`,
+      {
+        title: task.title,
+        description: task.description,
+        status: task.status,
+      },
       this.getAuthHeaders(),
     );
   }
