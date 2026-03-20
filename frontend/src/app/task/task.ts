@@ -40,4 +40,15 @@ export class Task implements OnInit {
   setStatusFilter(filter: 'ALL' | 'TO_DO' | 'IN_PROGRESS' | 'DONE') {
     this.selectedStatusFilter = filter;
   }
+
+  onTaskDeleted(id: string) {
+    if (window.confirm('Do you want to delete this task?')) {
+      this.taskService.deleteTask(id).subscribe({
+        next: () => {
+          this.tasks.update((tasks) => tasks.filter((t) => t.id.toString() !== id));
+        },
+        error: (err) => console.error('Failed to delete task', err),
+      });
+    }
+  }
 }

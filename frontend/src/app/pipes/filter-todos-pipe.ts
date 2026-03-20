@@ -3,6 +3,7 @@ import { TodoItem } from '../models/todo.model';
 
 @Pipe({
   name: 'filterTodos',
+  pure: false,
 })
 export class FilterTodosPipe implements PipeTransform {
   transform(
