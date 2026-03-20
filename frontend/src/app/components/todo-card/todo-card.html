@@ -1,4 +1,4 @@
-<div appAppHighlightCompletedTodo [isCompleted]="todoItem().status === 'DONE'" class="card">
+<div appAppHighlightCompletedTodo [status]="todoItem().status" class="card">
   <p [routerLink]="['/taskdetails', todoItem().id]">
     {{ todoItem().title | uppercase }}
   </p>
