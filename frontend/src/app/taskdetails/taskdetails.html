@@ -1,40 +1,62 @@
-<main class="task-details-page">
-  <section class="task-details-card">
-    <button class="back-button" routerLink="/">Back to Tasks</button>
-
-    @if (isLoading()) {
-      <p class="state-text">Loading task details...</p>
-    } @else if (errorMessage) {
-      <p class="state-text error-text">{{ errorMessage }}</p>
-    } @else if (task()) {
-      <div class="card-header">
-        <h1>{{ task()?.title }}</h1>
-        <span class="status-badge">{{ getStatusLabel() }}</span>
+<main class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="mb-3">
+        <a routerLink="/" class="btn btn-outline-secondary btn-sm">
+          &larr; Back to Tasks
+        </a>
       </div>
 
-      <div class="detail-grid">
-        <div class="meta-block">
-          <p class="meta-label">TASK ID</p>
-          <p class="meta-value">#{{ task()?.id }}</p>
-        </div>
+      <div class="card shadow-sm border-0">
+        @if (isLoading()) {
+          <div class="card-body text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading task details...</span>
+            </div>
+          </div>
+        } @else if (errorMessage) {
+          <div class="card-body">
+            <div class="alert alert-danger m-0" role="alert">
+              {{ errorMessage }}
+            </div>
+          </div>
+        } @else if (task()) {
+          <div class="card-body p-4 p-md-5">
+            <div class="d-flex justify-content-between align-items-start mb-4">
+              <h1 class="card-title mb-0 display-6 fw-bold">{{ task().title }}</h1>
+              <span class="badge fs-6 ms-3"
+                    [class.bg-warning]="task().status === 'IN_PROGRESS'"
+                    [class.bg-success]="task().status === 'DONE'"
+                    [class.bg-danger]="task().status === 'TO_DO'">
+                {{ getStatusLabel().replace('_', ' ') }}
+              </span>
+            </div>
 
-        <div class="meta-block">
-          <p class="meta-label">USER ID</p>
-          <p class="meta-value">#{{ task()?.userId }}</p>
-        </div>
+            <div class="bg-light p-4 rounded mb-4 min-vh-25">
+              <p class="fs-5 mb-0 text-secondary" style="white-space: pre-wrap;">
+                {{ task().description || 'No description provided.' }}
+              </p>
+            </div>
+            
+            @if (task().createdAt) {
+              <p class="text-muted small mb-4">
+                Created: {{ task().createdAt | date:'medium' }}
+              </p>
+            }
+
+            <hr class="my-4">
+
+            <div class="d-flex justify-content-end gap-3">
+              <button class="btn btn-outline-primary px-4" [routerLink]="['/edittask', task()?.id]">
+                Edit Task
+              </button>
+              <button type="button" class="btn btn-danger px-4" (click)="onDelete()">
+                Delete Task
+              </button>
+            </div>
+          </div>
+        }
       </div>
-
-      <div class="divider"></div>
-
-      <div class="description-block">
-        <p class="meta-label">TITLE</p>
-        <p class="description-text">{{ task()?.title }}</p>
-      </div>
-
-      <div>
-        <button [routerLink]="['/edittask', task()?.id]">Edit Task</button>
-        <button>Delete Task</button>
-      </div>
-    }
-  </section>
+    </div>
+  </div>
 </main>

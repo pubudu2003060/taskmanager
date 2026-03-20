@@ -1,22 +1,23 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Todoservice } from '../services/todoservice';
 import { TodoItem } from '../models/todo.model';
 import { TodoCard } from '../components/todo-card/todo-card';
 import { catchError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { FolterTodosPipe } from '../pipes/folter-todos-pipe';
+import { FilterTodosPipe } from '../pipes/filter-todos-pipe';
 import { RouterLink } from '@angular/router';
+import { TaskService } from '../services/task-service';
 
 @Component({
   selector: 'app-task',
-  imports: [TodoCard, FormsModule, FolterTodosPipe, RouterLink],
+  imports: [TodoCard, FormsModule, FilterTodosPipe, RouterLink],
   templateUrl: './task.html',
   styleUrl: './task.scss',
 })
 export class Task implements OnInit {
-  taskService = inject(Todoservice);
+  taskService = inject(TaskService);
   tasks = signal<TodoItem[]>([]);
-  searchTerm = signal('');
+  searchTerm = '';
+  selectedStatusFilter: 'ALL' | 'TO_DO' | 'IN_PROGRESS' | 'DONE' = 'ALL';
   isTaskLoaded = signal(false);
 
   ngOnInit(): void {
@@ -30,23 +31,24 @@ export class Task implements OnInit {
         }),
       )
       .subscribe((todos) => {
+        console.log('Fetched todos:', todos);
         this.tasks.set(todos);
         this.isTaskLoaded.set(true);
       });
   }
 
-  updateTodoItem(taskItem: TodoItem) {
-    console.log('Todo item toggled:', taskItem);
-    this.tasks.update((tasks) => {
-      return tasks.map((task) => {
-        if (task.id === taskItem.id) {
-          return {
-            ...task,
-            completed: !task.completed,
-          };
-        }
-        return task;
+  setStatusFilter(filter: 'ALL' | 'TO_DO' | 'IN_PROGRESS' | 'DONE') {
+    this.selectedStatusFilter = filter;
+  }
+
+  onTaskDeleted(id: string) {
+    if (window.confirm('Do you want to delete this task?')) {
+      this.taskService.deleteTask(id).subscribe({
+        next: () => {
+          this.tasks.update((tasks) => tasks.filter((t) => t.id.toString() !== id));
+        },
+        error: (err) => console.error('Failed to delete task', err),
       });
-    });
+    }
   }
 }

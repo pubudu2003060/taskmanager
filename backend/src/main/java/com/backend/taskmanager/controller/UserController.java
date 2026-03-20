@@ -1,6 +1,7 @@
 package com.backend.taskmanager.controller;
 
 import com.backend.taskmanager.dto.JwtResponse;
+import com.backend.taskmanager.dto.RegisteResponce;
 import com.backend.taskmanager.dto.UserDTO;
 import com.backend.taskmanager.service.UserService;
 import jakarta.validation.Valid;
@@ -22,9 +23,9 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody UserDTO user) {
+    public ResponseEntity<RegisteResponce> register(@Valid @RequestBody UserDTO user) {
         String message = userService.register(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(message);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new RegisteResponce(message));
     }
 
     @PostMapping("/login")

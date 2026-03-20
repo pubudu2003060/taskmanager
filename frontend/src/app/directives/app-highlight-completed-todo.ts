@@ -4,13 +4,15 @@ import { Directive, effect, ElementRef, inject, input } from '@angular/core';
   selector: '[appAppHighlightCompletedTodo]',
 })
 export class AppHighlightCompletedTodo {
-  isCompleted = input(false);
+  status = input('');
   el = inject(ElementRef);
   styleEffect = effect(() => {
-    if (this.isCompleted()) {
+    if (this.status() === 'DONE') {
       this.el.nativeElement.style.backgroundColor = 'lightgreen';
-    } else {
+    } else if (this.status() === 'TO_DO') {
       this.el.nativeElement.style.backgroundColor = 'red';
+    } else if (this.status() === 'IN_PROGRESS') {
+      this.el.nativeElement.style.backgroundColor = 'yellow';
     }
   });
 }
