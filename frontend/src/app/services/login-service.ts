@@ -6,7 +6,7 @@ import {
   RegisterRequest,
   RegisterResponce,
   User,
-} from '../models/user.mode';
+} from '../models/user.model';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
 

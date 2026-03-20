@@ -1,9 +1,9 @@
 import { Component, inject, signal } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { JWTResponse, LoginRequest, RegisterRequest, User } from '../models/user.mode';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { JWTResponse, LoginRequest, RegisterRequest, User } from '../models/user.model';
 import { LoginService } from '../services/login-service';
-import { catchError } from 'rxjs/internal/operators/catchError';
-import { Router, RouterLink } from '@angular/router';
+import { catchError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -15,15 +15,24 @@ export class Login {
   router = inject(Router);
 
   pageType = signal('login');
+  errorMessage = signal('');
+  submitAttempted = signal(false);
 
   loginService = inject(LoginService);
 
   loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
   onSubmit() {
+    this.submitAttempted.set(true);
+    this.errorMessage.set('');
+
+    if (this.loginForm.invalid) {
+      return;
+    }
+
     if (this.pageType() === 'login') {
       const user: LoginRequest = {
         username: this.loginForm.value.username || '',
@@ -33,7 +42,8 @@ export class Login {
         .login(user)
         .pipe(
           catchError((error) => {
-            console.error('Error fetching todos:', error);
+            console.error('Login error:', error);
+            this.errorMessage.set('Login failed. Please check your credentials.');
             throw error;
           }),
         )
@@ -50,7 +60,8 @@ export class Login {
         .register(user)
         .pipe(
           catchError((error) => {
-            console.error('Error fetching todos:', error);
+            console.error('Registration error:', error);
+            this.errorMessage.set('Registration failed. Please try again.');
             throw error;
           }),
         )
@@ -60,10 +71,12 @@ export class Login {
           this.changePageType('login');
         });
     }
-    console.log(this.loginForm.value);
   }
 
   changePageType(type: string) {
     this.pageType.set(type);
+    this.submitAttempted.set(false);
+    this.errorMessage.set('');
+    this.loginForm.reset();
   }
 }
