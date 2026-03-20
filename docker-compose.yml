@@ -14,10 +14,10 @@ services:
       - mysql-data:/var/lib/mysql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 10s
       retries: 10
-  app:
+  backend:
     build: ./backend
     container_name: taskmanager-backend
     restart: always
@@ -26,14 +26,24 @@ services:
     environment:
       DB_HOST: mysql
       PORT: 9090
+      FRONTEND_URL: http://localhost:4200
       JWT_SECRET: ${JWT_SECRET}
-      FRONTEND_URL: ${FRONTEND_URL}
       MYSQL_DB: ${MYSQL_DB}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     depends_on:
       mysql:
         condition: service_healthy
+  frontend:
+    build: ./frontend
+    container_name: taskmanager-frontend
+    restart: always
+    ports:
+      - "4200:80"
+    environment:
+      API_URL: http://backend:9090
+    depends_on:
+      - backend
 
 volumes:
   mysql-data:
