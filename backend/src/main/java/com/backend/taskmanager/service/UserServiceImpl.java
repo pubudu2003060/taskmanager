@@ -2,13 +2,15 @@ package com.backend.taskmanager.service;
 
 import com.backend.taskmanager.dto.JwtResponse;
 import com.backend.taskmanager.dto.UserDTO;
+import com.backend.taskmanager.exception.BadCredentialsException;
+import com.backend.taskmanager.exception.DuplicateResourceException;
 import com.backend.taskmanager.exception.UserNotFoundException;
 import com.backend.taskmanager.model.User;
 import com.backend.taskmanager.repository.UserRepository;
 import com.backend.taskmanager.util.JwtUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.modelmapper.ModelMapper;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -26,10 +28,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String register(UserDTO user)  {
+    public String register(UserDTO user) {
+        if (userRepo.findByUsername(user.getUsername()).isPresent()) {
+            throw new DuplicateResourceException("Username '" + user.getUsername() + "' is already taken");
+        }
+
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepo.save(modelMapper.map(user,User.class));
-        return "User registered";
+        userRepo.save(modelMapper.map(user, User.class));
+        return "User registered successfully";
     }
 
     @Override
@@ -38,7 +44,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (!encoder.matches(password, user.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new BadCredentialsException("Invalid credentials");
         }
 
         return new JwtResponse(jwtUtil.generateToken(username));

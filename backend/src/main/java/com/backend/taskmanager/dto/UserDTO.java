@@ -15,9 +15,10 @@ public class UserDTO {
 
     private UUID id;
 
-    @NotBlank(message = "Username is not Empty")
+    @NotBlank(message = "Username must not be empty")
     private String username;
 
-    @NotBlank(message = "Password is not Empty")
+    @NotBlank(message = "Password must not be empty")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 }
