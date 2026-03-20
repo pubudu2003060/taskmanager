@@ -25,7 +25,7 @@ public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
 
-    @Value("${FRONTEND_URL:http://localhost:4200}")
+    @Value("${FRONTEND_URL}")
     private String frontendURL;
 
     @Bean
