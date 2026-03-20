@@ -23,7 +23,6 @@ export class FilterTodosPipe implements PipeTransform {
     if (item.status) {
       return item.status;
     }
-
-    return item.completed ? 'DONE' : 'TO_DO';
+    return 'TO_DO';
   }
 }

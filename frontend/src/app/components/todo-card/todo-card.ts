@@ -14,9 +14,4 @@ import { DescriptionSlicePipePipe } from '../../pipes/description-slice-pipe-pip
 })
 export class TodoCard {
   todoItem = input.required<TodoItem>();
-  todoTogled = output<TodoItem>();
-
-  todoClicked() {
-    this.todoTogled.emit(this.todoItem());
-  }
 }

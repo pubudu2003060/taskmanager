@@ -42,6 +42,6 @@ export class Taskdetails implements OnInit {
   }
 
   getStatusLabel(): string {
-    return this.task()?.completed ? 'Completed' : 'To do';
+    return this.task()?.status === 'DONE' ? 'Completed' : 'Pending';
   }
 }

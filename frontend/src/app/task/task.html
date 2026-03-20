@@ -30,7 +30,7 @@
     }
 
     @for (item of tasks() | filterTodos: searchTerm : selectedStatusFilter; track item.id) {
-      <app-todo-card (todoTogled)="updateTodoItem($event)" [todoItem]="item"></app-todo-card>
+      <app-todo-card [todoItem]="item"></app-todo-card>
     }
   </div>
 </main>
