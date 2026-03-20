@@ -47,7 +47,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-By default, the backend is exposed on `http://localhost:8080` in production mode.
+By default, the backend is exposed on `http://localhost:8080` in development mode.
 
 ### 2. Frontend
 
@@ -64,7 +64,10 @@ This starts the Angular app in development mode. The frontend will be available 
 http://localhost:4200
 ```
 
-Make sure the backend is already running and that the frontend is using the correct API configuration.
+Make sure the backend is already running and that the frontend uses the correct API configuration:
+
+- In Development (`npm run start`), the frontend uses `environment.development.ts` to call the backend at `http://localhost:8080`.
+- In Production (`docker-compose up` / `ng build`), the frontend uses `environment.ts` to call the backend at `http://localhost:9090`.
 
 ## Database Setup
 
@@ -167,8 +170,7 @@ In the checked-in repository, the available compose file is `docker-compose.yml`
 MYSQL_DB=taskdb
 MYSQL_USER=mysqluser
 MYSQL_PASSWORD=40777f07b11eac380f8ba49e36e694f8dd417f6e
-JWT_SECRET=9d5249d7b6ef18e52a4dd43709f16e29a357c2c2
-FRONTEND_URL=http://localhost:4200
+MYSQL_ROOT_PASSWORD=3c16a59c100749889e671b7e253697e9e61f49f9
 ```
 
 ### Docker / production-style compose
