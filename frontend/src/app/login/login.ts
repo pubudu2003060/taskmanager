@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { JWTResponse, LoginRequest, RegisterRequest, User } from '../models/user.mode';
 import { LoginService } from '../services/login-service';
 import { catchError } from 'rxjs/internal/operators/catchError';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,7 @@ export class Login {
           }),
         )
         .subscribe((jwt) => {
-          console.log('JWT Token:', jwt.token);
+          localStorage.setItem('jwt', jwt.token);
         });
     } else if (this.pageType() === 'register') {
       const user: RegisterRequest = {
@@ -52,6 +53,8 @@ export class Login {
         )
         .subscribe((response) => {
           console.log('Registration Response:', response);
+          alert('Registration successful! Please login.');
+          this.changePageType('login');
         });
     }
     console.log(this.loginForm.value);

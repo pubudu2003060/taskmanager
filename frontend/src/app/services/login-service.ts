@@ -7,6 +7,7 @@ import {
   RegisterResponce,
   User,
 } from '../models/user.mode';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class LoginService {
     if (!user.password) {
       throw new Error('Password is required');
     }
-    return this.http.post<JWTResponse>('http://localhost:9090/api/v1/users/login', {
+    return this.http.post<JWTResponse>(`${environment.apiUrl}/api/v1/users/login`, {
       username: user.username,
       password: user.password,
     });
@@ -38,7 +39,7 @@ export class LoginService {
     if (!user.password) {
       throw new Error('Password is required');
     }
-    return this.http.post<RegisterResponce>('http://localhost:9090/api/v1/users/register', {
+    return this.http.post<RegisterResponce>(`${environment.apiUrl}/api/v1/users/register`, {
       username: user.username,
       password: user.password,
     });
