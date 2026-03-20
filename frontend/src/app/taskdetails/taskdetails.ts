@@ -1,7 +1,8 @@
 import { Component, inject, OnInit, output, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TodoItem } from '../models/todo.model';
-import { Todoservice } from '../services/todoservice';
+import { TaskService } from '../services/task-service';
+import { UUID } from 'crypto';
 
 @Component({
   selector: 'app-taskdetails',
@@ -11,7 +12,7 @@ import { Todoservice } from '../services/todoservice';
 })
 export class Taskdetails implements OnInit {
   private readonly route = inject(ActivatedRoute);
-  private readonly todoService = inject(Todoservice);
+  private readonly todoService = inject(TaskService);
   outTask = output<TodoItem>();
 
   task = signal<TodoItem | null>(null);
@@ -19,11 +20,11 @@ export class Taskdetails implements OnInit {
   errorMessage = '';
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = this.route.snapshot.paramMap.get('id');
 
-    if (!Number.isInteger(id) || id <= 0) {
+    if (!id) {
+      this.errorMessage = 'Task ID is missing.';
       this.isLoading.set(false);
-      this.errorMessage = 'Invalid task id.';
       return;
     }
 

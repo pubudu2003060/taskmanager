@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Todoservice } from '../services/todoservice';
+import { TaskService } from '../services/task-service';
 
 @Component({
   selector: 'app-newtask',
@@ -12,9 +12,9 @@ import { Todoservice } from '../services/todoservice';
 export class Newtask implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly formBuilder = inject(FormBuilder);
-  private readonly todoService = inject(Todoservice);
+  private readonly todoService = inject(TaskService);
   isEditMode = signal(false);
-  taskId: number | null = null;
+  taskId: string | null = null;
 
   readonly statusOptions = ['TO_DO', 'IN_PROGRESS', 'COMPLETED'];
   readonly submitAttempted = signal(false);
@@ -46,10 +46,14 @@ export class Newtask implements OnInit {
 
   ngOnInit(): void {
     //if path is edittask then we are in edit mode
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode.set(true);
       this.taskId = id;
+    }
+
+    if (!id) {
+      return;
     }
 
     this.todoService.getTodoById(id).subscribe((task) => {
