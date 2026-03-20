@@ -18,10 +18,34 @@
       </form>
     </div>
     <div>
-      <button type="button" (click)="setStatusFilter('ALL')">All</button>
-      <button type="button" (click)="setStatusFilter('TO_DO')">Todo</button>
-      <button type="button" (click)="setStatusFilter('IN_PROGRESS')">Inprogress</button>
-      <button type="button" (click)="setStatusFilter('DONE')">Completed</button>
+      <button
+        type="button"
+        [class.active-filter]="selectedStatusFilter === 'ALL'"
+        (click)="setStatusFilter('ALL')"
+      >
+        All
+      </button>
+      <button
+        type="button"
+        [class.active-filter]="selectedStatusFilter === 'TO_DO'"
+        (click)="setStatusFilter('TO_DO')"
+      >
+        Todo
+      </button>
+      <button
+        type="button"
+        [class.active-filter]="selectedStatusFilter === 'IN_PROGRESS'"
+        (click)="setStatusFilter('IN_PROGRESS')"
+      >
+        Inprogress
+      </button>
+      <button
+        type="button"
+        [class.active-filter]="selectedStatusFilter === 'DONE'"
+        (click)="setStatusFilter('DONE')"
+      >
+        Completed
+      </button>
     </div>
   </div>
   <div>
