@@ -1,11 +1,7 @@
 <div appAppHighlightCompletedTodo [isCompleted]="todoItem().completed" class="card">
-  <a [routerLink]="['/taskdetails', todoItem().id]">
+  <p [routerLink]="['/taskdetails', todoItem().id]">
     {{ todoItem().title | uppercase }}
-  </a>
-  <input
-    id="todo--{{ todoItem().id }}"
-    type="checkbox"
-    [checked]="todoItem().completed"
-    (change)="this.todoClicked()"
-  />
+  </p>
+  <p>{{ todoItem().description | descriptionSlicePipe }}</p>
+  <p>{{ todoItem().status }}</p>
 </div>

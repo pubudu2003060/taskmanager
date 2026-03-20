@@ -4,10 +4,11 @@ import { AppHighlightCompletedTodo } from '../../directives/app-highlight-comple
 import { todo } from 'node:test';
 import { UpperCasePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { DescriptionSlicePipePipe } from '../../pipes/description-slice-pipe-pipe';
 
 @Component({
   selector: 'app-todo-card',
-  imports: [AppHighlightCompletedTodo, UpperCasePipe, RouterLink],
+  imports: [AppHighlightCompletedTodo, UpperCasePipe, RouterLink, DescriptionSlicePipePipe],
   templateUrl: './todo-card.html',
   styleUrl: './todo-card.scss',
 })
