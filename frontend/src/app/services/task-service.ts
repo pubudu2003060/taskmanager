@@ -9,25 +9,16 @@ import { environment } from '../../environments/environment';
 export class TaskService {
   http = inject(HttpClient);
 
-  private getAuthHeaders() {
-    const token = localStorage.getItem('jwt') || '';
 
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`,
-      }),
-    };
-  }
 
   getTodosFromAPI() {
-    return this.http.get<TodoItem[]>(`${environment.apiUrl}/api/v1/tasks`, this.getAuthHeaders());
+    return this.http.get<TodoItem[]>(`${environment.apiUrl}/api/v1/tasks`);
   }
 
   getTodoById(id: string) {
     console.log('Fetching task details for ID:', id);
     return this.http.get<TodoItem>(
-      `${environment.apiUrl}/api/v1/tasks/${id}`,
-      this.getAuthHeaders(),
+      `${environment.apiUrl}/api/v1/tasks/${id}`
     );
   }
 
@@ -38,8 +29,7 @@ export class TaskService {
         title: task.title,
         description: task.description,
         status: task.status,
-      },
-      this.getAuthHeaders(),
+      }
     );
   }
 
@@ -50,12 +40,11 @@ export class TaskService {
         title: task.title,
         description: task.description,
         status: task.status,
-      },
-      this.getAuthHeaders(),
+      }
     );
   }
 
   deleteTask(id: string) {
-    return this.http.delete<void>(`${environment.apiUrl}/api/v1/tasks/${id}`, this.getAuthHeaders());
+    return this.http.delete<void>(`${environment.apiUrl}/api/v1/tasks/${id}`);
   }
 }
