@@ -17,7 +17,7 @@
 
       <div>
         <button [routerLink]="['/edittask', task()?.id]">Edit Task</button>
-        <button>Delete Task</button>
+        <button type="button" (click)="onDelete()">Delete Task</button>
       </div>
     }
   </section>

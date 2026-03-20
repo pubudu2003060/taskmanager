@@ -54,4 +54,8 @@ export class TaskService {
       this.getAuthHeaders(),
     );
   }
+
+  deleteTask(id: string) {
+    return this.http.delete<void>(`${environment.apiUrl}/api/v1/tasks/${id}`, this.getAuthHeaders());
+  }
 }
